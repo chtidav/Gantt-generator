@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - Test Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .gantt-container {
+            display: grid;
+            grid-template-columns: 200px repeat(var(--periods), 100px);
+            gap: 2px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+        .gantt-header { 
+            background: #e0e0e0; 
+            padding: 10px; 
+            font-weight: bold; 
+            text-align: center;
+        }
+        .gantt-cell { 
+            background: white; 
+            padding: 10px; 
+            min-height: 80px; 
+            position: relative;
+            border: 1px solid #ddd;
+        }
+        .gantt-row-label {
+            background: #f5f5f5;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+        }
+        .gantt-milestone {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 16px;
+            height: 16px;
+            background: #ff4444;
+            border: 2px solid #cc0000;
+        }
+        .milestone-text {
+            position: absolute;
+            top: 45px;
+            left: calc(50% + 20px);
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #cc0000;
+            background: transparent;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            white-space: nowrap;
+        }
+        .milestone-major { background: #ff4444; border-color: #cc0000; }
+        .milestone-critical { background: #cc0000; border-color: #990000; }
+    </style>
+</head>
+<body>
+    <h1>{{TITLE}}</h1>
+    <p>{{SUBTITLE}}</p>
+    
+    <div id="gantt-chart">
+        <div class="loading">Génération en cours...</div>
+    </div>
+
+    <script>
+        const config = {{CONFIG_JSON}};
+        
+        function generateGanttChart() {
+            const container = document.getElementById('gantt-chart');
+            const periods = config.period_labels || [];
+            
+            document.documentElement.style.setProperty('--periods', periods.length);
+            
+            let html = '<div class="gantt-container">';
+            html += '<div class="gantt-header">Tâches</div>';
+            periods.forEach(period => {
+                html += `<div class="gantt-header">${period}</div>`;
+            });
+            
+            config.rows.forEach(row => {
+                html += `<div class="gantt-cell gantt-row-label">${row.name}</div>`;
+                
+                const rowCells = Array(periods.length).fill('').map(() => '<div class="gantt-cell"></div>');
+                
+                // Add milestones (simplified)
+                row.milestones?.forEach(milestone => {
+                    const milestoneIndex = milestone.position - 1;
+                    if (milestoneIndex >= 0 && milestoneIndex < periods.length) {
+                        rowCells[milestoneIndex] = `<div class="gantt-cell">
+                            <div class="gantt-milestone ${milestone.style}" title="${milestone.name}"></div>
+                            <div class="milestone-text">${milestone.name}</div>
+                        </div>`;
+                    }
+                });
+                
+                html += rowCells.join('');
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        document.addEventListener('DOMContentLoaded', generateGanttChart);
+    </script>
+</body>
+</html>

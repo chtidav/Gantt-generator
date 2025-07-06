@@ -1,0 +1,161 @@
+{
+  "title": "Test Complet des Styles de Jalons",
+  "subtitle": "Démonstration des nouveaux styles avec tous les types de jalons",
+  "periods": 15,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", 
+    "M9", "M10", "M11", "M12", "M13", "M14", "M15"
+  ],
+  "rows": [
+    {
+      "name": "Jalons Majeurs",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Phase 1",
+          "start": 1,
+          "duration": 5,
+          "style": "phase-1"
+        },
+        {
+          "name": "Phase 2",
+          "start": 8,
+          "duration": 5,
+          "style": "phase-2"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Démarrage",
+          "position": 1,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Jalon Intermédiaire",
+          "position": 6,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Validation",
+          "position": 13,
+          "style": "milestone-major"
+        }
+      ]
+    },
+    {
+      "name": "Jalons Mineurs",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Tâche A",
+          "start": 2,
+          "duration": 3,
+          "style": "task-primary"
+        },
+        {
+          "name": "Tâche B",
+          "start": 7,
+          "duration": 4,
+          "style": "task-secondary"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Revue 1",
+          "position": 3,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "Revue 2",
+          "position": 8,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "Revue 3",
+          "position": 12,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "Livraison",
+          "position": 15,
+          "style": "milestone-minor"
+        }
+      ]
+    },
+    {
+      "name": "Jalons Critiques",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Développement Critical",
+          "start": 4,
+          "duration": 6,
+          "style": "task-danger"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "URGENT: Go/No-Go",
+          "position": 5,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "CRITIQUE: Deadline",
+          "position": 10,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "FINAL: Release",
+          "position": 14,
+          "style": "milestone-critical"
+        }
+      ]
+    },
+    {
+      "name": "Mix de Jalons",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Projet Multi-phases",
+          "start": 1,
+          "duration": 14,
+          "style": "phase-3"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Début Projet",
+          "position": 2,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Checkpoint",
+          "position": 4,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "ALERTE CRITIQUE",
+          "position": 7,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "Validation QA",
+          "position": 9,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "Release Candidate",
+          "position": 11,
+          "style": "milestone-major"
+        },
+        {
+          "name": "PRODUCTION LIVE",
+          "position": 14,
+          "style": "milestone-critical"
+        }
+      ]
+    }
+  ]
+}

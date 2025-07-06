@@ -1,0 +1,46 @@
+{
+  "title": "Test Jalons au Survol",
+  "subtitle": "Labels visibles uniquement au survol des losanges",
+  "periods": 8,
+  "period_type": "months",
+  "milestone_labels_visible": false,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"
+  ],
+  "rows": [
+    {
+      "name": "Survol Test",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Projet Principal",
+          "start": 1,
+          "duration": 7,
+          "style": "phase-1"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Début (Survolez-moi)",
+          "position": 2,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Milieu (Survolez-moi)",
+          "position": 4,
+          "style": "milestone-minor"
+        },
+        {
+          "name": "Critique (Survolez-moi)",
+          "position": 6,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "Fin (Survolez-moi)",
+          "position": 8,
+          "style": "milestone-major"
+        }
+      ]
+    }
+  ]
+}

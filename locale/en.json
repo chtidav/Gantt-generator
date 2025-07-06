@@ -1,0 +1,52 @@
+{
+  "app_title": "Gantt Chart Generator",
+  "welcome_message": "🚀 Welcome to Gantt Chart Generator",
+  "separator": "========================================",
+  "menu": {
+    "title": "📊 Main Menu",
+    "create_new": "1. Create new diagram",
+    "load_existing": "2. Load existing configuration",
+    "extract_html": "3. Extract from existing HTML",
+    "exit": "4. Exit",
+    "choice_prompt": "Choose an option (1-4): "
+  },
+  "config": {
+    "title_prompt": "📊 Diagram title: ",
+    "title_default": "My Gantt Chart",
+    "subtitle_prompt": "📝 Description: ",
+    "subtitle_default": "Project planning",
+    "period_setup": "⏰ Period Configuration",
+    "period_type_prompt": "Period type (months/weeks/quarters/custom) [months]: ",
+    "period_count_prompt": "Number of periods [24]: ",
+    "custom_periods": "Setting up custom periods",
+    "row_setup": "📋 Row Configuration",
+    "add_row_prompt": "Add a new row? (y/n): ",
+    "row_name_prompt": "Row name: ",
+    "row_type_prompt": "Row type (simple/milestones/special) [simple]: "
+  },
+  "generation": {
+    "generating": "🔄 Generating Gantt chart...",
+    "success": "✅ Gantt chart generated successfully!",
+    "error": "❌ Error during generation: ",
+    "file_saved": "📁 File saved as: ",
+    "opening_browser": "🌐 Opening in browser..."
+  },
+  "extraction": {
+    "extracting": "🔍 Extracting configuration from HTML...",
+    "file_prompt": "Enter HTML file path: ",
+    "success": "✅ Configuration extracted successfully!",
+    "error": "❌ Error during extraction: "
+  },
+  "errors": {
+    "file_not_found": "File not found: ",
+    "invalid_config": "Invalid configuration format",
+    "missing_dependency": "Missing dependency. Installing...",
+    "installation_failed": "Failed to install dependency: "
+  },
+  "common": {
+    "yes": "y",
+    "no": "n",
+    "continue": "Press Enter to continue...",
+    "back_to_menu": "Returning to main menu..."
+  }
+}

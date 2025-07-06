@@ -1,0 +1,71 @@
+{
+  "title": "Software Development Project",
+  "subtitle": "18-month development roadmap",
+  "periods": 18,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6",
+    "M7", "M8", "M9", "M10", "M11", "M12",
+    "M13", "M14", "M15", "M16", "M17", "M18"
+  ],
+  "rows": [
+    {
+      "name": "Main Phases",
+      "type": "simple",
+      "tasks": [
+        {
+          "name": "Planning & Design",
+          "start": 1,
+          "duration": 4,
+          "style": "phase-1"
+        },
+        {
+          "name": "Development",
+          "start": 5,
+          "duration": 10,
+          "style": "phase-2"
+        },
+        {
+          "name": "Testing & Deployment",
+          "start": 15,
+          "duration": 4,
+          "style": "phase-3"
+        }
+      ],
+      "milestones": [],
+      "special_items": []
+    },
+    {
+      "name": "Backend Development",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Core API",
+          "start": 5,
+          "duration": 6,
+          "style": "task-primary"
+        },
+        {
+          "name": "Integrations",
+          "start": 11,
+          "duration": 4,
+          "style": "task-secondary"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "API Complete",
+          "position": 11,
+          "style": "milestone-major"
+        },
+        {
+          "name": "All Systems Ready",
+          "position": 15,
+          "style": "milestone-minor"
+        }
+      ],
+      "special_items": []
+    }
+  ]
+}

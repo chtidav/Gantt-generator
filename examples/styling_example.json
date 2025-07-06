@@ -1,0 +1,157 @@
+{
+  "title": "Diagramme de Gantt avec Styles Universels",
+  "subtitle": "Démonstration des styles standards réutilisables.",
+  "periods": 12,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6", 
+    "M7", "M8", "M9", "M10", "M11", "M12"
+  ],
+  "rows": [
+    {
+      "name": "Phases Principales",
+      "type": "simple",
+      "tasks": [
+        {
+          "name": "Phase 1",
+          "start": 1,
+          "duration": 4,
+          "style": "phase-1"
+        },
+        {
+          "name": "Phase 2",
+          "start": 5,
+          "duration": 4,
+          "style": "phase-2"
+        },
+        {
+          "name": "Phase 3",
+          "start": 9,
+          "duration": 4,
+          "style": "phase-3"
+        }
+      ],
+      "milestones": [],
+      "special_items": []
+    },
+    {
+      "name": "Ressources Humaines",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {
+          "name": "Directeur Technique",
+          "start": 2,
+          "duration": 2,
+          "type": "marker",
+          "style": "recruitment-item"
+        },
+        {
+          "name": "Chef de Projet",
+          "start": 4,
+          "duration": 2,
+          "type": "marker",
+          "style": "recruitment-item"
+        },
+        {
+          "name": "Développeur Senior",
+          "start": 6,
+          "duration": 2,
+          "type": "marker",
+          "style": "recruitment-item"
+        }
+      ]
+    },
+    {
+      "name": "Budget & Finances",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {
+          "name": "Financement Série A",
+          "start": 3,
+          "duration": 1,
+          "type": "marker",
+          "style": "budget-item"
+        },
+        {
+          "name": "Budget Marketing",
+          "start": 6,
+          "duration": 3,
+          "type": "marker",
+          "style": "budget-item"
+        },
+        {
+          "name": "Investissement R&D",
+          "start": 9,
+          "duration": 2,
+          "type": "marker",
+          "style": "budget-item"
+        }
+      ]
+    },
+    {
+      "name": "Risques & Mitigation",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {
+          "name": "Risque Technique",
+          "start": 2,
+          "duration": 2,
+          "type": "marker",
+          "style": "risk-item"
+        },
+        {
+          "name": "Risque Marché",
+          "start": 5,
+          "duration": 3,
+          "type": "marker",
+          "style": "risk-item"
+        },
+        {
+          "name": "Risque Concurrentiel",
+          "start": 8,
+          "duration": 2,
+          "type": "marker",
+          "style": "risk-item"
+        }
+      ]
+    },
+    {
+      "name": "Jalons Clés",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Développement MVP",
+          "start": 1,
+          "duration": 6,
+          "style": "task-primary"
+        },
+        {
+          "name": "Lancement Produit",
+          "start": 7,
+          "duration": 6,
+          "style": "task-success"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "MVP Prêt",
+          "position": 6,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Lancement Public",
+          "position": 12,
+          "style": "milestone-critical"
+        }
+      ],
+      "special_items": []
+    }
+  ]
+}

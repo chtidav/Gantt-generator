@@ -1,0 +1,72 @@
+{
+  "title": "Test Milestone Labels - Hidden by Default",
+  "subtitle": "Demonstrating milestone labels that appear only on hover",
+  "periods": 12,
+  "period_type": "months",
+  "milestone_labels_visible": false,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6",
+    "M7", "M8", "M9", "M10", "M11", "M12"
+  ],
+  "rows": [
+    {
+      "name": "Development Phase",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Backend Development",
+          "start": 1,
+          "duration": 6,
+          "style": "bg-blue-500 text-white"
+        },
+        {
+          "name": "Frontend Development",
+          "start": 4,
+          "duration": 6,
+          "style": "bg-green-500 text-white"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Design Complete",
+          "position": 3,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Alpha Release",
+          "position": 7,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Beta Release",
+          "position": 10,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "Final Release",
+          "position": 12,
+          "style": "milestone-critical"
+        }
+      ]
+    },
+    {
+      "name": "Marketing Phase",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Campaign Planning",
+          "start": 8,
+          "duration": 3,
+          "style": "bg-purple-500 text-white"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Campaign Launch",
+          "position": 11,
+          "style": "milestone-major"
+        }
+      ]
+    }
+  ]
+}

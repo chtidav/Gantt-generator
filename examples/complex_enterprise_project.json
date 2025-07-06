@@ -1,0 +1,129 @@
+{
+  "title": "Projet Enterprise Complexe - Développement Logiciel",
+  "subtitle": "Démonstration complète avec tous les types d'éléments et styles",
+  "periods": 24,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": [
+    "J1", "F1", "M1", "A1", "M1", "J1", "J1", "A1", "S1", "O1", "N1", "D1",
+    "J2", "F2", "M2", "A2", "M2", "J2", "J2", "A2", "S2", "O2", "N2", "D2"
+  ],
+  "rows": [
+    {
+      "name": "🚀 Phases Stratégiques",
+      "type": "simple",
+      "tasks": [
+        {"name": "Étude de Marché", "start": 1, "duration": 3, "style": "phase-1"},
+        {"name": "Conception & Architecture", "start": 4, "duration": 5, "style": "phase-2"},
+        {"name": "Développement Core", "start": 9, "duration": 8, "style": "phase-2"},
+        {"name": "Tests & Validation", "start": 17, "duration": 4, "style": "phase-3"},
+        {"name": "Déploiement & Lancement", "start": 21, "duration": 4, "style": "phase-3"}
+      ],
+      "milestones": [],
+      "special_items": []
+    },
+    {
+      "name": "💻 Développement Backend",
+      "type": "milestones",
+      "tasks": [
+        {"name": "API Core", "start": 5, "duration": 6, "style": "task-primary"},
+        {"name": "Base de Données", "start": 7, "duration": 4, "style": "task-secondary"},
+        {"name": "Services Micro", "start": 11, "duration": 6, "style": "task-primary"},
+        {"name": "Intégrations", "start": 17, "duration": 5, "style": "task-success"}
+      ],
+      "milestones": [
+        {"name": "API v1", "position": 11, "style": "milestone-major"},
+        {"name": "Beta Backend", "position": 17, "style": "milestone-major"},
+        {"name": "Production Ready", "position": 22, "style": "milestone-critical"}
+      ],
+      "special_items": []
+    },
+    {
+      "name": "🎨 Développement Frontend",
+      "type": "milestones",
+      "tasks": [
+        {"name": "UI/UX Design", "start": 3, "duration": 4, "style": "task-warning"},
+        {"name": "Interface React", "start": 7, "duration": 8, "style": "task-primary"},
+        {"name": "Mobile App", "start": 12, "duration": 7, "style": "task-secondary"},
+        {"name": "Tests Utilisateurs", "start": 19, "duration": 3, "style": "task-success"}
+      ],
+      "milestones": [
+        {"name": "Design Validé", "position": 7, "style": "milestone-minor"},
+        {"name": "Web App", "position": 15, "style": "milestone-major"},
+        {"name": "Mobile Release", "position": 19, "style": "milestone-major"}
+      ],
+      "special_items": []
+    },
+    {
+      "name": "👥 Gestion des Ressources Humaines",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {"name": "CTO & Lead Dev", "start": 1, "duration": 3, "type": "marker", "style": "recruitment-item"},
+        {"name": "Équipe Backend (3)", "start": 4, "duration": 2, "type": "marker", "style": "recruitment-item"},
+        {"name": "Équipe Frontend (2)", "start": 6, "duration": 2, "type": "marker", "style": "recruitment-item"},
+        {"name": "DevOps Engineer", "start": 10, "duration": 2, "type": "marker", "style": "recruitment-item"},
+        {"name": "QA & Testeurs (2)", "start": 15, "duration": 2, "type": "marker", "style": "recruitment-item"},
+        {"name": "Support Client", "start": 20, "duration": 2, "type": "marker", "style": "recruitment-item"}
+      ]
+    },
+    {
+      "name": "💰 Budget & Financement",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {"name": "Seed Funding", "start": 1, "duration": 1, "type": "marker", "style": "budget-item"},
+        {"name": "Série A - 2M€", "start": 6, "duration": 2, "type": "marker", "style": "budget-item"},
+        {"name": "Budget Marketing", "start": 12, "duration": 4, "type": "marker", "style": "budget-item"},
+        {"name": "Série B - 5M€", "start": 18, "duration": 2, "type": "marker", "style": "budget-item"},
+        {"name": "Budget Expansion", "start": 22, "duration": 3, "type": "marker", "style": "budget-item"}
+      ]
+    },
+    {
+      "name": "⚠️ Gestion des Risques",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {"name": "Risque Technique", "start": 2, "duration": 3, "type": "marker", "style": "risk-item"},
+        {"name": "Concurrence", "start": 8, "duration": 4, "type": "marker", "style": "risk-item"},
+        {"name": "Conformité RGPD", "start": 14, "duration": 3, "type": "marker", "style": "risk-item"},
+        {"name": "Scalabilité", "start": 20, "duration": 4, "type": "marker", "style": "risk-item"}
+      ]
+    },
+    {
+      "name": "🎯 Marketing & Commercial",
+      "type": "milestones",
+      "tasks": [
+        {"name": "Stratégie Marketing", "start": 8, "duration": 3, "style": "task-warning"},
+        {"name": "Campagnes Digitales", "start": 14, "duration": 6, "style": "task-primary"},
+        {"name": "Partenariats", "start": 18, "duration": 4, "style": "task-secondary"},
+        {"name": "Expansion International", "start": 22, "duration": 3, "style": "task-success"}
+      ],
+      "milestones": [
+        {"name": "Beta Publique", "position": 16, "style": "milestone-major"},
+        {"name": "Lancement Commercial", "position": 20, "style": "milestone-critical"},
+        {"name": "1000 Clients", "position": 24, "style": "milestone-critical"}
+      ],
+      "special_items": []
+    },
+    {
+      "name": "🔄 Événements Récurrents",
+      "type": "special",
+      "tasks": [],
+      "milestones": [],
+      "special_items": [
+        {"name": "Sprint Planning", "start": 1, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Reviews Mensuelles", "start": 3, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Audit Trimestriel", "start": 6, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Board Meeting", "start": 9, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Conférences Tech", "start": 12, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Rétrospectives", "start": 15, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Planification Q4", "start": 18, "duration": 1, "type": "marker", "style": "event-recurring"},
+        {"name": "Bilan Annuel", "start": 21, "duration": 1, "type": "marker", "style": "event-recurring"}
+      ]
+    }
+  ]
+}

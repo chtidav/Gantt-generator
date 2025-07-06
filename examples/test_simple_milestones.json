@@ -1,0 +1,27 @@
+{
+  "title": "Test Simple Jalons",
+  "subtitle": "Test minimal pour déboguer les labels de jalons",
+  "periods": 6,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": ["M1", "M2", "M3", "M4", "M5", "M6"],
+  "rows": [
+    {
+      "name": "Test Simple",
+      "type": "milestones",
+      "tasks": [],
+      "milestones": [
+        {
+          "name": "START",
+          "position": 2,
+          "style": "milestone-major"
+        },
+        {
+          "name": "END",
+          "position": 5,
+          "style": "milestone-critical"
+        }
+      ]
+    }
+  ]
+}

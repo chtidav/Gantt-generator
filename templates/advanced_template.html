@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} - Gantt Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .gantt-container {
+            display: grid;
+            grid-template-columns: 220px repeat(var(--periods), 120px);
+            gap: 1px;
+            background-color: #e5e7eb;
+            border: 1px solid #d1d5db;
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gantt-container::-webkit-scrollbar {
+            height: 10px;
+        }
+        .gantt-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 5px;
+        }
+        .gantt-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 5px;
+        }
+        .gantt-container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        }
+        
+        .gantt-header { 
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 12px 8px;
+            font-weight: 700;
+            text-align: center;
+            border-right: 1px solid #d1d5db;
+            font-size: 13px;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .gantt-cell { 
+            background: white; 
+            padding: 6px; 
+            min-height: 70px; 
+            border-right: 1px solid #e5e7eb;
+            position: relative;
+            transition: background-color 0.2s ease;
+            overflow: visible;
+        }
+        .gantt-cell:hover {
+            background-color: #f8fafc;
+        }
+        
+        .gantt-row-label {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            font-weight: 600;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            padding-left: 16px;
+            border-right: 2px solid #d1d5db;
+        }
+        
+        .gantt-task {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            height: 28px;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .gantt-task:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .gantt-milestone {
+            position: absolute;
+            top: 75%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 14px;
+            height: 14px;
+            background: #ef4444;
+            border: 3px solid #dc2626;
+            z-index: 20;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .gantt-milestone:hover {
+            transform: translate(-50%, -50%) rotate(45deg) scale(1.1);
+        }
+        
+        .milestone-text {
+            position: absolute;
+            top: 75%;
+            left: calc(50% + 20px);
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #dc2626;
+            white-space: nowrap;
+            background: transparent;
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            z-index: 30;
+        }
+        
+        .milestone-text.hidden {
+            display: none;
+        }
+        
+        .gantt-milestone:hover + .milestone-text.hidden {
+            display: block;
+        }
+        
+        /* Phase Styles with Gradients */
+        .phase-1 { 
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-left: 4px solid #1d4ed8;
+        }
+        .phase-2 { 
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-left: 4px solid #b45309;
+        }
+        .phase-3 { 
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-left: 4px solid #047857;
+        }
+        
+        /* Task Styles */
+        .task-primary { 
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            border-left: 4px solid #2563eb;
+        }
+        .task-secondary { 
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
+            border-left: 4px solid #4b5563;
+        }
+        .task-success { 
+            background: linear-gradient(135deg, #34d399, #10b981);
+            border-left: 4px solid #059669;
+        }
+        .task-warning { 
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-left: 4px solid #d97706;
+        }
+        .task-danger {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            border-left: 4px solid #dc2626;
+        }
+        
+        /* Special Item Styles */
+        .special-item { 
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-left: 4px solid #6d28d9;
+        }
+        .recruitment-item { 
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border-left: 4px solid #4338ca;
+        }
+        .budget-item { 
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-left: 4px solid #b45309;
+        }
+        .risk-item { 
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border-left: 4px solid #b91c1c;
+        }
+        .event-recurring { 
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            border-left: 4px solid #6d28d9;
+        }
+        
+        /* Milestone Styles */
+        .milestone-major { 
+            background: #ef4444; 
+            border-color: #dc2626; 
+            width: 16px; 
+            height: 16px; 
+        }
+        .milestone-minor { 
+            background: #f59e0b; 
+            border-color: #d97706; 
+            width: 12px; 
+            height: 12px; 
+        }
+        .milestone-critical { 
+            background: #dc2626; 
+            border-color: #991b1b; 
+            width: 18px; 
+            height: 18px;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Milestone text colors matching their diamonds */
+        .milestone-major + .milestone-text {
+            color: #dc2626;
+        }
+        .milestone-minor + .milestone-text {
+            color: #d97706;
+        }
+        .milestone-critical + .milestone-text {
+            color: #991b1b;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Header animations */
+        .gantt-header {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Progress indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
+            z-index: 1000;
+            opacity: 0.8;
+        }
+        
+        /* Chart container animation */
+        .chart-container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-indicator"></div>
+    
+    <div class="min-h-screen p-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header Section -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">{{TITLE}}</h1>
+                <p class="text-xl text-white/80 drop-shadow">{{SUBTITLE}}</p>
+                <div class="mt-4 inline-flex items-center space-x-4 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-white/90 text-sm">En cours</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-blue-400 rounded-full"></div>
+                        <span class="text-white/90 text-sm">Planifié</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                        <span class="text-white/90 text-sm">À risque</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart Container -->
+            <div class="chart-container bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8">
+                <div id="gantt-chart">
+                    <div class="flex items-center justify-center h-32">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                        <span class="ml-3 text-gray-600">Génération du diagramme...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Legend -->
+            <div class="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-white mb-4">Légende</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded"></div>
+                        <span class="text-white/90 text-sm">Phase 1</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-3 bg-gradient-to-r from-amber-500 to-amber-700 rounded"></div>
+                        <span class="text-white/90 text-sm">Phase 2</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-3 bg-gradient-to-r from-emerald-500 to-emerald-700 rounded"></div>
+                        <span class="text-white/90 text-sm">Phase 3</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-red-500 border-2 border-red-600 transform rotate-45"></div>
+                        <span class="text-white/90 text-sm">Jalons</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration data
+        const config = {{CONFIG_JSON}};
+        
+        function generateGanttChart() {
+            const container = document.getElementById('gantt-chart');
+            const periods = config.period_labels || [];
+            
+            // Set CSS custom property for grid columns
+            document.documentElement.style.setProperty('--periods', periods.length);
+            
+            // Create header
+            let html = '<div class="gantt-container">';
+            html += '<div class="gantt-header">📋 Tâches</div>';
+            periods.forEach((period, index) => {
+                html += `<div class="gantt-header" style="animation-delay: ${index * 0.1}s">${period}</div>`;
+            });
+            
+            // Create rows
+            config.rows.forEach((row, rowIndex) => {
+                html += `<div class="gantt-cell gantt-row-label" style="animation-delay: ${rowIndex * 0.2}s">${row.name}</div>`;
+                
+                // Create grid of cells for this row
+                const rowCells = Array(periods.length).fill('').map(() => '<div class="gantt-cell"></div>');
+                
+                // Add tasks
+                row.tasks.forEach(task => {
+                    const startIndex = task.start - 1;
+                    const endIndex = Math.min(startIndex + task.duration - 1, periods.length - 1);
+                    const taskWidth = (task.duration * 120) - 6;
+                    
+                    if (startIndex >= 0 && startIndex < periods.length) {
+                        rowCells[startIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${task.style}" style="width: ${taskWidth}px;" title="${task.name} (${task.duration} périodes)">
+                                ${task.name}
+                            </div>
+                        </div>`;
+                        
+                        for (let i = startIndex + 1; i <= endIndex; i++) {
+                            if (i < periods.length) {
+                                rowCells[i] = '<div class="gantt-cell"></div>';
+                            }
+                        }
+                    }
+                });
+                
+                // Add milestones
+                row.milestones?.forEach(milestone => {
+                    const milestoneIndex = milestone.position - 1;
+                    if (milestoneIndex >= 0 && milestoneIndex < periods.length) {
+                        const milestoneLabelsVisible = config.milestone_labels_visible !== false;
+                        const labelClass = milestoneLabelsVisible ? 'milestone-text' : 'milestone-text hidden';
+                        // Check if there's already content in this cell
+                        const existingContent = rowCells[milestoneIndex];
+                        if (existingContent.includes('gantt-task')) {
+                            // Add milestone to existing cell with task
+                            rowCells[milestoneIndex] = existingContent.replace(
+                                '</div></div>',
+                                `<div class="gantt-milestone ${milestone.style}" title="${milestone.name}"></div>
+                                 <div class="${labelClass}">${milestone.name}</div></div></div>`
+                            );
+                        } else {
+                            // Add milestone to empty cell
+                            rowCells[milestoneIndex] = `<div class="gantt-cell">
+                                <div class="gantt-milestone ${milestone.style}" title="${milestone.name}"></div>
+                                <div class="${labelClass}">${milestone.name}</div>
+                            </div>`;
+                        }
+                    }
+                });
+                
+                // Add special items
+                row.special_items?.forEach(item => {
+                    const itemIndex = item.start - 1;
+                    if (itemIndex >= 0 && itemIndex < periods.length) {
+                        const itemWidth = (item.duration * 120) - 6;
+                        rowCells[itemIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${item.style}" style="width: ${itemWidth}px;" title="${item.name} (${item.duration} périodes)">
+                                ${item.name}
+                            </div>
+                        </div>`;
+                        
+                        for (let i = itemIndex + 1; i < itemIndex + item.duration && i < periods.length; i++) {
+                            rowCells[i] = '<div class="gantt-cell"></div>';
+                        }
+                    }
+                });
+                
+                // Add all cells for this row
+                html += rowCells.join('');
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+            
+            // Add fade-in animation to tasks
+            setTimeout(() => {
+                const tasks = document.querySelectorAll('.gantt-task');
+                tasks.forEach((task, index) => {
+                    task.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s both`;
+                });
+            }, 500);
+        }
+        
+        // Generate chart when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(generateGanttChart, 800);
+        });
+        
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', () => {
+            // Progress bar animation
+            const progressBar = document.querySelector('.progress-indicator');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 2;
+                progressBar.style.background = `linear-gradient(90deg, 
+                    #3b82f6 0%, 
+                    #10b981 ${progress}%, 
+                    #f59e0b ${progress + 20}%, 
+                    #ef4444 100%)`;
+                if (progress >= 100) clearInterval(interval);
+            }, 50);
+        });
+    </script>
+</body>
+</html>

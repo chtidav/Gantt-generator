@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Milestone Labels - Hidden by Default - Gantt Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gantt-container {
+            display: grid;
+            grid-template-columns: 200px repeat(var(--periods), 80px);
+            gap: 1px;
+            background-color: #e5e7eb;
+            border: 1px solid #d1d5db;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+        .gantt-header { 
+            background: #f3f4f6; 
+            padding: 8px; 
+            font-weight: 600; 
+            text-align: center;
+            border-right: 1px solid #d1d5db;
+            font-size: 12px;
+        }
+        .gantt-cell { 
+            background: white; 
+            padding: 4px; 
+            min-height: 40px; 
+            border-right: 1px solid #e5e7eb;
+            position: relative;
+        }
+        .gantt-task {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 24px;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .gantt-milestone {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border: 2px solid #dc2626;
+            z-index: 20;
+        }
+        .milestone-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #dc2626;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+        
+        .milestone-text.hidden {
+            display: none;
+        }
+        
+        .gantt-milestone:hover + .milestone-text.hidden {
+            display: block;
+        }
+        .phase-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .phase-2 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .phase-3 { background: linear-gradient(135deg, #10b981, #059669); }
+        .task-primary { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .task-secondary { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+        .task-success { background: linear-gradient(135deg, #34d399, #10b981); }
+        .task-warning { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .milestone-major { background: #ef4444; border-color: #dc2626; width: 14px; height: 14px; }
+        .milestone-minor { background: #f59e0b; border-color: #d97706; width: 10px; height: 10px; }
+        .milestone-critical { background: #dc2626; border-color: #991b1b; width: 16px; height: 16px; }
+        
+        /* Special item styles */
+        .special-item { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .recruitment-item { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .budget-item { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .risk-item { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .event-recurring { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Test Milestone Labels - Hidden by Default</h1>
+        <p class="text-gray-600 mb-6">Demonstrating milestone labels that appear only on hover</p>
+        
+        <div id="gantt-chart" class="bg-white rounded-lg shadow-sm p-4">
+            <!-- Chart will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        // Configuration data
+        const config = {"title": "Test Milestone Labels - Hidden by Default", "subtitle": "Demonstrating milestone labels that appear only on hover", "periods": 12, "period_type": "months", "milestone_labels_visible": false, "period_labels": ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"], "rows": [{"name": "Development Phase", "type": "milestones", "tasks": [{"name": "Backend Development", "start": 1, "duration": 6, "style": "bg-blue-500 text-white"}, {"name": "Frontend Development", "start": 4, "duration": 6, "style": "bg-green-500 text-white"}], "milestones": [{"name": "Design Complete", "position": 3, "style": "milestone-major"}, {"name": "Alpha Release", "position": 7, "style": "milestone-major"}, {"name": "Beta Release", "position": 10, "style": "milestone-critical"}, {"name": "Final Release", "position": 12, "style": "milestone-critical"}]}, {"name": "Marketing Phase", "type": "milestones", "tasks": [{"name": "Campaign Planning", "start": 8, "duration": 3, "style": "bg-purple-500 text-white"}], "milestones": [{"name": "Campaign Launch", "position": 11, "style": "milestone-major"}]}]};
+        
+        function generateGanttChart() {
+            const container = document.getElementById('gantt-chart');
+            const periods = config.period_labels || [];
+            
+            // Set CSS custom property for grid columns
+            document.documentElement.style.setProperty('--periods', periods.length);
+            
+            // Create header
+            let html = '<div class="gantt-container">';
+            html += '<div class="gantt-header">Tasks</div>';
+            periods.forEach(period => {
+                html += `<div class="gantt-header">${period}</div>`;
+            });
+            
+            // Create rows
+            config.rows.forEach(row => {
+                html += `<div class="gantt-cell font-semibold bg-gray-50">${row.name}</div>`;
+                
+                // Create grid of cells for this row
+                const rowCells = Array(periods.length).fill('').map(() => '<div class="gantt-cell"></div>');
+                
+                // Add tasks
+                row.tasks.forEach(task => {
+                    const startIndex = task.start - 1; // Convert to 0-based index
+                    const endIndex = Math.min(startIndex + task.duration - 1, periods.length - 1);
+                    
+                    // Calculate task width and position
+                    const taskWidth = (task.duration * 80) - 4; // 80px per column minus padding
+                    
+                    // Add task to the starting cell
+                    if (startIndex >= 0 && startIndex < periods.length) {
+                        rowCells[startIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${task.style}" style="width: ${taskWidth}px;">
+                                ${task.name}
+                            </div>
+                        </div>`;
+                        
+                        // Clear cells that are spanned by this task
+                        for (let i = startIndex + 1; i <= endIndex; i++) {
+                            if (i < periods.length) {
+                                rowCells[i] = '<div class="gantt-cell"></div>';
+                            }
+                        }
+                    }
+                });
+                
+                // Add milestones
+                row.milestones?.forEach(milestone => {
+                    const milestoneIndex = milestone.position - 1;
+                    if (milestoneIndex >= 0 && milestoneIndex < periods.length) {
+                        const milestoneLabelsVisible = config.milestone_labels_visible !== false;
+                        const labelClass = milestoneLabelsVisible ? '' : ' hidden';
+                        // Check if there's already content in this cell
+                        const existingContent = rowCells[milestoneIndex];
+                        if (existingContent.includes('gantt-task')) {
+                            // Add milestone to existing cell with task
+                            rowCells[milestoneIndex] = existingContent.replace(
+                                '</div></div>',
+                                `<div class="gantt-milestone ${milestone.style}"></div>
+                                 <div class="milestone-text${labelClass}">${milestone.name}</div></div></div>`
+                            );
+                        } else {
+                            // Add milestone to empty cell
+                            rowCells[milestoneIndex] = `<div class="gantt-cell">
+                                <div class="gantt-milestone ${milestone.style}"></div>
+                                <div class="milestone-text${labelClass}">${milestone.name}</div>
+                            </div>`;
+                        }
+                    }
+                });
+                
+                // Add special items
+                row.special_items?.forEach(item => {
+                    const itemIndex = item.start - 1;
+                    if (itemIndex >= 0 && itemIndex < periods.length) {
+                        const itemWidth = (item.duration * 80) - 4;
+                        rowCells[itemIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${item.style}" style="width: ${itemWidth}px;">
+                                ${item.name}
+                            </div>
+                        </div>`;
+                        
+                        // Clear spanned cells
+                        for (let i = itemIndex + 1; i < itemIndex + item.duration && i < periods.length; i++) {
+                            rowCells[i] = '<div class="gantt-cell"></div>';
+                        }
+                    }
+                });
+                
+                // Add all cells for this row
+                html += rowCells.join('');
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        // Generate chart when page loads
+        document.addEventListener('DOMContentLoaded', generateGanttChart);
+    </script>
+</body>
+</html>

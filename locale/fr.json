@@ -1,0 +1,52 @@
+{
+  "app_title": "Générateur de Diagramme de Gantt",
+  "welcome_message": "🚀 Bienvenue dans le Générateur de Diagramme de Gantt",
+  "separator": "========================================",
+  "menu": {
+    "title": "📊 Menu Principal",
+    "create_new": "1. Créer un nouveau diagramme",
+    "load_existing": "2. Charger une configuration existante",
+    "extract_html": "3. Extraire depuis un HTML existant",
+    "exit": "4. Quitter",
+    "choice_prompt": "Choisissez une option (1-4): "
+  },
+  "config": {
+    "title_prompt": "📊 Titre du diagramme: ",
+    "title_default": "Mon Diagramme de Gantt",
+    "subtitle_prompt": "📝 Description: ",
+    "subtitle_default": "Planification de projet",
+    "period_setup": "⏰ Configuration des périodes",
+    "period_type_prompt": "Type de période (months/weeks/quarters/custom) [months]: ",
+    "period_count_prompt": "Nombre de périodes [24]: ",
+    "custom_periods": "Configuration des périodes personnalisées",
+    "row_setup": "📋 Configuration des lignes",
+    "add_row_prompt": "Ajouter une nouvelle ligne? (o/n): ",
+    "row_name_prompt": "Nom de la ligne: ",
+    "row_type_prompt": "Type de ligne (simple/milestones/special) [simple]: "
+  },
+  "generation": {
+    "generating": "🔄 Génération du diagramme de Gantt...",
+    "success": "✅ Diagramme de Gantt généré avec succès!",
+    "error": "❌ Erreur pendant la génération: ",
+    "file_saved": "📁 Fichier sauvegardé sous: ",
+    "opening_browser": "🌐 Ouverture dans le navigateur..."
+  },
+  "extraction": {
+    "extracting": "🔍 Extraction de la configuration depuis HTML...",
+    "file_prompt": "Entrez le chemin du fichier HTML: ",
+    "success": "✅ Configuration extraite avec succès!",
+    "error": "❌ Erreur pendant l'extraction: "
+  },
+  "errors": {
+    "file_not_found": "Fichier non trouvé: ",
+    "invalid_config": "Format de configuration invalide",
+    "missing_dependency": "Dépendance manquante. Installation...",
+    "installation_failed": "Échec de l'installation de la dépendance: "
+  },
+  "common": {
+    "yes": "o",
+    "no": "n",
+    "continue": "Appuyez sur Entrée pour continuer...",
+    "back_to_menu": "Retour au menu principal..."
+  }
+}

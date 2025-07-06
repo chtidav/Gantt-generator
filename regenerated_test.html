@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Enterprise Complexe - Développement Logiciel - Gantt Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gantt-container {
+            display: grid;
+            grid-template-columns: 200px repeat(var(--periods), 80px);
+            gap: 1px;
+            background-color: #e5e7eb;
+            border: 1px solid #d1d5db;
+            overflow-x: auto;
+            border-radius: 8px;
+        }
+        .gantt-header { 
+            background: #f3f4f6; 
+            padding: 8px; 
+            font-weight: 600; 
+            text-align: center;
+            border-right: 1px solid #d1d5db;
+            font-size: 12px;
+        }
+        .gantt-cell { 
+            background: white; 
+            padding: 4px; 
+            min-height: 40px; 
+            border-right: 1px solid #e5e7eb;
+            position: relative;
+        }
+        .gantt-task {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 24px;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .gantt-milestone {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border: 2px solid #dc2626;
+            z-index: 20;
+        }
+        .milestone-text {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #dc2626;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+        .phase-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .phase-2 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .phase-3 { background: linear-gradient(135deg, #10b981, #059669); }
+        .task-primary { background: linear-gradient(135deg, #60a5fa, #3b82f6); }
+        .task-secondary { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+        .task-success { background: linear-gradient(135deg, #34d399, #10b981); }
+        .task-warning { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+        .milestone-major { background: #ef4444; border-color: #dc2626; width: 14px; height: 14px; }
+        .milestone-minor { background: #f59e0b; border-color: #d97706; width: 10px; height: 10px; }
+        .milestone-critical { background: #dc2626; border-color: #991b1b; width: 16px; height: 16px; }
+        
+        /* Special item styles */
+        .special-item { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .recruitment-item { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .budget-item { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .risk-item { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .event-recurring { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Projet Enterprise Complexe - Développement Logiciel</h1>
+        <p class="text-gray-600 mb-6">Démonstration complète avec tous les types d'éléments et styles</p>
+        
+        <div id="gantt-chart" class="bg-white rounded-lg shadow-sm p-4">
+            <!-- Chart will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        // Configuration data
+        const config = {"title": "Projet Enterprise Complexe - D\u00e9veloppement Logiciel", "subtitle": "D\u00e9monstration compl\u00e8te avec tous les types d'\u00e9l\u00e9ments et styles", "periods": 24, "period_type": "months", "period_labels": ["J1", "F1", "M1", "A1", "M1", "J1", "J1", "A1", "S1", "O1", "N1", "D1", "J2", "F2", "M2", "A2", "M2", "J2", "J2", "A2", "S2", "O2", "N2", "D2"], "rows": [{"name": "\ud83d\ude80 Phases Strat\u00e9giques", "type": "simple", "tasks": [{"name": "\u00c9tude de March\u00e9", "start": 1, "duration": 3, "style": "phase-1"}, {"name": "Conception & Architecture", "start": 4, "duration": 5, "style": "phase-2"}, {"name": "D\u00e9veloppement Core", "start": 9, "duration": 8, "style": "phase-2"}, {"name": "Tests & Validation", "start": 17, "duration": 4, "style": "phase-3"}, {"name": "D\u00e9ploiement & Lancement", "start": 21, "duration": 4, "style": "phase-3"}], "milestones": [], "special_items": []}, {"name": "\ud83d\udcbb D\u00e9veloppement Backend", "type": "milestones", "tasks": [{"name": "API Core", "start": 5, "duration": 6, "style": "task-primary"}, {"name": "Base de Donn\u00e9es", "start": 7, "duration": 4, "style": "task-secondary"}, {"name": "Services Micro", "start": 11, "duration": 6, "style": "task-primary"}, {"name": "Int\u00e9grations", "start": 17, "duration": 5, "style": "task-success"}], "milestones": [{"name": "API v1", "position": 11, "style": "milestone-major"}, {"name": "Beta Backend", "position": 17, "style": "milestone-major"}, {"name": "Production Ready", "position": 22, "style": "milestone-critical"}], "special_items": []}, {"name": "\ud83c\udfa8 D\u00e9veloppement Frontend", "type": "milestones", "tasks": [{"name": "UI/UX Design", "start": 3, "duration": 4, "style": "task-warning"}, {"name": "Interface React", "start": 7, "duration": 8, "style": "task-primary"}, {"name": "Mobile App", "start": 12, "duration": 7, "style": "task-secondary"}, {"name": "Tests Utilisateurs", "start": 19, "duration": 3, "style": "task-success"}], "milestones": [{"name": "Design Valid\u00e9", "position": 7, "style": "milestone-minor"}, {"name": "Web App", "position": 15, "style": "milestone-major"}, {"name": "Mobile Release", "position": 19, "style": "milestone-major"}], "special_items": []}, {"name": "\ud83d\udc65 Gestion des Ressources Humaines", "type": "special", "tasks": [], "milestones": [], "special_items": [{"name": "CTO & Lead Dev", "start": 1, "duration": 3, "type": "marker", "style": "recruitment-item"}, {"name": "\u00c9quipe Backend (3)", "start": 4, "duration": 2, "type": "marker", "style": "recruitment-item"}, {"name": "\u00c9quipe Frontend (2)", "start": 6, "duration": 2, "type": "marker", "style": "recruitment-item"}, {"name": "DevOps Engineer", "start": 10, "duration": 2, "type": "marker", "style": "recruitment-item"}, {"name": "QA & Testeurs (2)", "start": 15, "duration": 2, "type": "marker", "style": "recruitment-item"}, {"name": "Support Client", "start": 20, "duration": 2, "type": "marker", "style": "recruitment-item"}]}, {"name": "\ud83d\udcb0 Budget & Financement", "type": "special", "tasks": [], "milestones": [], "special_items": [{"name": "Seed Funding", "start": 1, "duration": 1, "type": "marker", "style": "budget-item"}, {"name": "S\u00e9rie A - 2M\u20ac", "start": 6, "duration": 2, "type": "marker", "style": "budget-item"}, {"name": "Budget Marketing", "start": 12, "duration": 4, "type": "marker", "style": "budget-item"}, {"name": "S\u00e9rie B - 5M\u20ac", "start": 18, "duration": 2, "type": "marker", "style": "budget-item"}, {"name": "Budget Expansion", "start": 22, "duration": 3, "type": "marker", "style": "budget-item"}]}, {"name": "\u26a0\ufe0f Gestion des Risques", "type": "special", "tasks": [], "milestones": [], "special_items": [{"name": "Risque Technique", "start": 2, "duration": 3, "type": "marker", "style": "risk-item"}, {"name": "Concurrence", "start": 8, "duration": 4, "type": "marker", "style": "risk-item"}, {"name": "Conformit\u00e9 RGPD", "start": 14, "duration": 3, "type": "marker", "style": "risk-item"}, {"name": "Scalabilit\u00e9", "start": 20, "duration": 4, "type": "marker", "style": "risk-item"}]}, {"name": "\ud83c\udfaf Marketing & Commercial", "type": "milestones", "tasks": [{"name": "Strat\u00e9gie Marketing", "start": 8, "duration": 3, "style": "task-warning"}, {"name": "Campagnes Digitales", "start": 14, "duration": 6, "style": "task-primary"}, {"name": "Partenariats", "start": 18, "duration": 4, "style": "task-secondary"}, {"name": "Expansion International", "start": 22, "duration": 3, "style": "task-success"}], "milestones": [{"name": "Beta Publique", "position": 16, "style": "milestone-major"}, {"name": "Lancement Commercial", "position": 20, "style": "milestone-critical"}, {"name": "1000 Clients", "position": 24, "style": "milestone-critical"}], "special_items": []}, {"name": "\ud83d\udd04 \u00c9v\u00e9nements R\u00e9currents", "type": "special", "tasks": [], "milestones": [], "special_items": [{"name": "Sprint Planning", "start": 1, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Reviews Mensuelles", "start": 3, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Audit Trimestriel", "start": 6, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Board Meeting", "start": 9, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Conf\u00e9rences Tech", "start": 12, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "R\u00e9trospectives", "start": 15, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Planification Q4", "start": 18, "duration": 1, "type": "marker", "style": "event-recurring"}, {"name": "Bilan Annuel", "start": 21, "duration": 1, "type": "marker", "style": "event-recurring"}]}]};
+        
+        function generateGanttChart() {
+            const container = document.getElementById('gantt-chart');
+            const periods = config.period_labels || [];
+            
+            // Set CSS custom property for grid columns
+            document.documentElement.style.setProperty('--periods', periods.length);
+            
+            // Create header
+            let html = '<div class="gantt-container">';
+            html += '<div class="gantt-header">Tasks</div>';
+            periods.forEach(period => {
+                html += `<div class="gantt-header">${period}</div>`;
+            });
+            
+            // Create rows
+            config.rows.forEach(row => {
+                html += `<div class="gantt-cell font-semibold bg-gray-50">${row.name}</div>`;
+                
+                // Create grid of cells for this row
+                const rowCells = Array(periods.length).fill('').map(() => '<div class="gantt-cell"></div>');
+                
+                // Add tasks
+                row.tasks.forEach(task => {
+                    const startIndex = task.start - 1; // Convert to 0-based index
+                    const endIndex = Math.min(startIndex + task.duration - 1, periods.length - 1);
+                    
+                    // Calculate task width and position
+                    const taskWidth = (task.duration * 80) - 4; // 80px per column minus padding
+                    
+                    // Add task to the starting cell
+                    if (startIndex >= 0 && startIndex < periods.length) {
+                        rowCells[startIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${task.style}" style="width: ${taskWidth}px;">
+                                ${task.name}
+                            </div>
+                        </div>`;
+                        
+                        // Clear cells that are spanned by this task
+                        for (let i = startIndex + 1; i <= endIndex; i++) {
+                            if (i < periods.length) {
+                                rowCells[i] = '<div class="gantt-cell"></div>';
+                            }
+                        }
+                    }
+                });
+                
+                // Add milestones
+                row.milestones?.forEach(milestone => {
+                    const milestoneIndex = milestone.position - 1;
+                    if (milestoneIndex >= 0 && milestoneIndex < periods.length) {
+                        // Check if there's already content in this cell
+                        const existingContent = rowCells[milestoneIndex];
+                        if (existingContent.includes('gantt-task')) {
+                            // Add milestone to existing cell with task
+                            rowCells[milestoneIndex] = existingContent.replace(
+                                '</div></div>',
+                                `<div class="gantt-milestone ${milestone.style}"></div>
+                                 <div class="milestone-text">${milestone.name}</div></div></div>`
+                            );
+                        } else {
+                            // Add milestone to empty cell
+                            rowCells[milestoneIndex] = `<div class="gantt-cell">
+                                <div class="gantt-milestone ${milestone.style}"></div>
+                                <div class="milestone-text">${milestone.name}</div>
+                            </div>`;
+                        }
+                    }
+                });
+                
+                // Add special items
+                row.special_items?.forEach(item => {
+                    const itemIndex = item.start - 1;
+                    if (itemIndex >= 0 && itemIndex < periods.length) {
+                        const itemWidth = (item.duration * 80) - 4;
+                        rowCells[itemIndex] = `<div class="gantt-cell">
+                            <div class="gantt-task ${item.style}" style="width: ${itemWidth}px;">
+                                ${item.name}
+                            </div>
+                        </div>`;
+                        
+                        // Clear spanned cells
+                        for (let i = itemIndex + 1; i < itemIndex + item.duration && i < periods.length; i++) {
+                            rowCells[i] = '<div class="gantt-cell"></div>';
+                        }
+                    }
+                });
+                
+                // Add all cells for this row
+                html += rowCells.join('');
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        // Generate chart when page loads
+        document.addEventListener('DOMContentLoaded', generateGanttChart);
+    </script>
+</body>
+</html>

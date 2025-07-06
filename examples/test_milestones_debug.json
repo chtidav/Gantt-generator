@@ -1,0 +1,70 @@
+{
+  "title": "Test Jalons Visibles",
+  "subtitle": "Configuration pour tester la visibilité des labels de jalons",
+  "periods": 12,
+  "period_type": "months",
+  "milestone_labels_visible": true,
+  "period_labels": [
+    "M1", "M2", "M3", "M4", "M5", "M6",
+    "M7", "M8", "M9", "M10", "M11", "M12"
+  ],
+  "rows": [
+    {
+      "name": "Projet Phase A",
+      "type": "milestones",
+      "tasks": [
+        {
+          "name": "Tâche 1",
+          "start": 1,
+          "duration": 3,
+          "style": "bg-blue-500 text-white"
+        },
+        {
+          "name": "Tâche 2",
+          "start": 6,
+          "duration": 3,
+          "style": "bg-green-500 text-white"
+        }
+      ],
+      "milestones": [
+        {
+          "name": "Début",
+          "position": 1,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Milestone 1",
+          "position": 4,
+          "style": "milestone-major"
+        },
+        {
+          "name": "Milestone 2",
+          "position": 9,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "Fin",
+          "position": 12,
+          "style": "milestone-minor"
+        }
+      ]
+    },
+    {
+      "name": "Projet Phase B",
+      "type": "milestones",
+      "tasks": [],
+      "milestones": [
+        {
+          "name": "Jalon Important",
+          "position": 6,
+          "style": "milestone-critical"
+        },
+        {
+          "name": "Jalon Final",
+          "position": 10,
+          "style": "milestone-major"
+        }
+      ]
+    }
+  ]
+}
